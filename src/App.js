@@ -13,7 +13,14 @@ const App = () => {
     const person = {
       name: newName,
     };
-    setPersons(persons.concat(person));
+    const samePerson = persons.find((p) => p.name === newName);
+
+    if (samePerson) {
+      window.alert(`${newName} already exists!`);
+    } else {
+      setPersons(persons.concat(person));
+      setNewName("");
+    }
   };
 
   const handleChange = (e) => {
@@ -25,7 +32,7 @@ const App = () => {
       <h2>Phonebook</h2>
       <form onSubmit={handleSubmit}>
         <div>
-          Name: <input onChange={handleChange} />
+          Name: <input value={newName} onChange={handleChange} />
         </div>
         <button type="submit">Add</button>
       </form>
@@ -35,7 +42,6 @@ const App = () => {
           return <li key={person.name}>{person.name}</li>;
         })}
       </ul>
-      <div>Debug: {newName}</div>
     </div>
   );
 };
