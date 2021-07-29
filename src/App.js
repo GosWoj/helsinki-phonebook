@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
 import Search from "./components/Search";
 import Form from "./components/Form";
 import List from "./components/List";
+import personService from "./services/persons";
 
 const App = () => {
   const [persons, setPersons] = useState([]);
@@ -11,8 +11,8 @@ const App = () => {
   const [search, setSearch] = useState("");
 
   useEffect(() => {
-    axios.get("http://localhost:3001/persons").then((response) => {
-      setPersons(response.data);
+    personService.getAll().then((response) => {
+      setPersons(response);
     });
   }, []);
 
@@ -27,8 +27,8 @@ const App = () => {
     if (samePerson) {
       window.alert(`${newName} already exists!`);
     } else {
-      axios.post("http://localhost:3001/persons", person).then((result) => {
-        setPersons(persons.concat(result.data));
+      personService.create(person).then((returnedPerson) => {
+        setPersons(persons.concat(returnedPerson));
         setNewName("");
         setNewNumber("");
       });
