@@ -5,7 +5,7 @@ const List = ({ persons }) => {
     <ul>
       {persons.map((person) => {
         return (
-          <li key={person.name}>
+          <li key={person.id}>
             {person.name} {person.number}
           </li>
         );

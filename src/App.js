@@ -27,9 +27,11 @@ const App = () => {
     if (samePerson) {
       window.alert(`${newName} already exists!`);
     } else {
-      setPersons(persons.concat(person));
-      setNewName("");
-      setNewNumber("");
+      axios.post("http://localhost:3001/persons", person).then((result) => {
+        setPersons(persons.concat(result.data));
+        setNewName("");
+        setNewNumber("");
+      });
     }
   };
 
