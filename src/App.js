@@ -11,9 +11,14 @@ const App = () => {
   const [search, setSearch] = useState("");
 
   useEffect(() => {
-    personService.getAll().then((response) => {
-      setPersons(response);
-    });
+    personService
+      .getAll()
+      .then((response) => {
+        setPersons(response);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }, []);
 
   const handleSubmit = (e) => {
@@ -25,13 +30,36 @@ const App = () => {
     const samePerson = persons.find((p) => p.name === newName);
 
     if (samePerson) {
-      window.alert(`${newName} already exists!`);
+      // window.alert(`${newName} already exists!`);
+      if (
+        window.confirm(
+          `${newName} already exists. Replace old number with a new one?`
+        )
+      ) {
+        personService
+          .updateNumber(samePerson.id, person)
+          .then((result) => {
+            setPersons(
+              persons.map((p) => (p.id !== samePerson.id ? p : result))
+            );
+            setNewName("");
+            setNewNumber("");
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      }
     } else {
-      personService.create(person).then((returnedPerson) => {
-        setPersons(persons.concat(returnedPerson));
-        setNewName("");
-        setNewNumber("");
-      });
+      personService
+        .create(person)
+        .then((returnedPerson) => {
+          setPersons(persons.concat(returnedPerson));
+          setNewName("");
+          setNewNumber("");
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     }
   };
 
