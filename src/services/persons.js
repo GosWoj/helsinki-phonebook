@@ -12,9 +12,14 @@ const getAll = () => {
   return axios.get(baseUrl).then((response) => response.data);
 };
 
+const deletePerson = (id) => {
+  return axios.delete(`${baseUrl}/${id}`).then((response) => response.data);
+};
+
 const personService = {
   create,
   getAll,
+  deletePerson,
 };
 
 export default personService;

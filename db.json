@@ -6,11 +6,6 @@
       "id": 1
     },
     {
-      "name": "Ada Lovelace",
-      "number": "39-44-5323523",
-      "id": 2
-    },
-    {
       "name": "Dan Abramov",
       "number": "12-43-234345",
       "id": 3
@@ -21,14 +16,6 @@
       "id": 4
     },
     {
-      "id": 5
-    },
-    {
-      "name": "Maria",
-      "number": "12-34567",
-      "id": 6
-    },
-    {
       "name": "Joker",
       "number": "31-31231231",
       "id": 7
@@ -37,6 +24,11 @@
       "name": "Liara",
       "number": "324-13123",
       "id": 8
+    },
+    {
+      "name": "Shepard",
+      "number": "324-543913",
+      "id": 9
     }
   ]
 }
