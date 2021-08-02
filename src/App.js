@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import Search from "./components/Search";
 import Form from "./components/Form";
 import List from "./components/List";
+import Notification from "./components/Notification";
 import personService from "./services/persons";
 
 const App = () => {
@@ -9,6 +10,7 @@ const App = () => {
   const [newName, setNewName] = useState("");
   const [newNumber, setNewNumber] = useState("");
   const [search, setSearch] = useState("");
+  const [errorMessage, setErrorMessage] = useState(null);
 
   useEffect(() => {
     personService
@@ -44,6 +46,10 @@ const App = () => {
             );
             setNewName("");
             setNewNumber("");
+            setErrorMessage(`Changed number for ${samePerson.name}`);
+            setTimeout(() => {
+              setErrorMessage(null);
+            }, 5000);
           })
           .catch((error) => {
             console.log(error);
@@ -56,6 +62,10 @@ const App = () => {
           setPersons(persons.concat(returnedPerson));
           setNewName("");
           setNewNumber("");
+          setErrorMessage(`Added ${returnedPerson.name}`);
+          setTimeout(() => {
+            setErrorMessage(null);
+          }, 5000);
         })
         .catch((error) => {
           console.log(error);
@@ -90,6 +100,7 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
+      <Notification message={errorMessage} />
       <Search search={search} handleFilter={handleFilter} />
       <h2>Add someone</h2>
       <Form
