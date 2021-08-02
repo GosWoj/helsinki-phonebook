@@ -11,6 +11,7 @@ const App = () => {
   const [newNumber, setNewNumber] = useState("");
   const [search, setSearch] = useState("");
   const [errorMessage, setErrorMessage] = useState(null);
+  const [type, setType] = useState("");
 
   useEffect(() => {
     personService
@@ -46,12 +47,22 @@ const App = () => {
             );
             setNewName("");
             setNewNumber("");
+            setType("success");
             setErrorMessage(`Changed number for ${samePerson.name}`);
             setTimeout(() => {
               setErrorMessage(null);
+              setType("");
             }, 5000);
           })
           .catch((error) => {
+            setType("error");
+            setErrorMessage(
+              `Information about ${samePerson.name} has already been removed from server`
+            );
+            setTimeout(() => {
+              setErrorMessage(null);
+              setType("");
+            }, 5000);
             console.log(error);
           });
       }
@@ -62,9 +73,11 @@ const App = () => {
           setPersons(persons.concat(returnedPerson));
           setNewName("");
           setNewNumber("");
+          setType("success");
           setErrorMessage(`Added ${returnedPerson.name}`);
           setTimeout(() => {
             setErrorMessage(null);
+            setType("");
           }, 5000);
         })
         .catch((error) => {
@@ -100,7 +113,7 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
-      <Notification message={errorMessage} />
+      <Notification message={errorMessage} type={type} />
       <Search search={search} handleFilter={handleFilter} />
       <h2>Add someone</h2>
       <Form
