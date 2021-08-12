@@ -55,15 +55,13 @@ const App = () => {
             }, 5000);
           })
           .catch((error) => {
+            console.log(error.response.data);
             setType("error");
-            setErrorMessage(
-              `Information about ${samePerson.name} has already been removed from server`
-            );
+            setErrorMessage(error.response.data.error);
             setTimeout(() => {
               setErrorMessage(null);
               setType("");
             }, 5000);
-            console.log(error);
           });
       }
     } else {
@@ -81,7 +79,13 @@ const App = () => {
           }, 5000);
         })
         .catch((error) => {
-          console.log(error);
+          console.log(error.response.data);
+          setType("error");
+          setErrorMessage(error.response.data.error);
+          setTimeout(() => {
+            setErrorMessage(null);
+            setType("");
+          }, 5000);
         });
     }
   };
